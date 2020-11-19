@@ -44,7 +44,6 @@ yarn-error.log*
 node_modules
 package-lock.json
 src/setupProxy.js
-src/config/dev.js
 
 debug.log
 
