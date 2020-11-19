@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
     .then((data) => {
         res.json(data);
     })
-    .catch((err) => res.status(400).json("empty credentials"));
+    .catch((err) => res.json("empty credentials"));
     // res.send(database.users);
 });
 
@@ -44,12 +44,12 @@ app.post("/api/signin", (req, res) => {
           .then((user) => {
             res.json(user[0]);
           })
-          .catch((err) => res.status(400).json("unable to get user"));
+          .catch((err) => res.json("unable to get user"));
       } else {
-        res.status(400).json("wrong credentials");
+        res.json("wrong credentials");
       }
     })
-    .catch((err) => res.status(400).json("wrong credentials"));
+    .catch((err) => res.json("wrong credentials"));
 });
 
 app.post("/api/register", (req, res) => {
@@ -77,7 +77,7 @@ app.post("/api/register", (req, res) => {
       })
       .then(trx.commit)
       .catch(trx.rollback);
-  }).catch((err) => res.status(400).json("unable to register"));
+  }).catch((err) => res.json("unable to register"));
 });
 
 app.get("/api/profile/:id", (req, res) => {
@@ -89,10 +89,10 @@ app.get("/api/profile/:id", (req, res) => {
       if (user.length) {
         res.json(user[0]);
       } else {
-        res.status(400).json("Not found");
+        res.json("Not found");
       }
     })
-    .catch((err) => res.status(400).json("error getting user"));
+    .catch((err) => res.json("error getting user"));
 });
 
 app.put("/api/image", (req, res) => {
@@ -104,7 +104,7 @@ app.put("/api/image", (req, res) => {
     .then((entries) => {
       res.json(entries[0]);
     })
-    .catch((err) => res.status(400).json("unable to get entries"));
+    .catch((err) => res.json("unable to get entries"));
 });
 
 if (process.env.NODE_ENV === "production") {
