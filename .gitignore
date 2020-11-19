@@ -2,6 +2,7 @@ node_modules
 config/dev.js
 package-lock.json
 client/node_modules
+client/src/config/dev.js
 client/package-lock.json
 client/src/setupProxy.js
 

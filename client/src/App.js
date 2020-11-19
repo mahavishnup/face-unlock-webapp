@@ -9,9 +9,13 @@ import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
 import './App.css';
+const config = require("./config/keys");
 
+//You must add your own API key here from Clarifai.
 const app = new Clarifai.App({
-  apikey: "" + process.env.CLARIFAI_API_KEY + ""
+  params:{
+    apiKey: config.ClarifaiAPIKey,
+  }
 });
 
 const particlesOptions = {
