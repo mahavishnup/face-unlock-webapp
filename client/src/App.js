@@ -13,9 +13,7 @@ const config = require("./config/keys");
 
 //You must add your own API key here from Clarifai.
 const app = new Clarifai.App({
-  params:{
     apiKey: config.ClarifaiAPIKey,
-  }
 });
 
 const particlesOptions = {
