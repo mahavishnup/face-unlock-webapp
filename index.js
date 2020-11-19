@@ -21,13 +21,13 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
-    db.select("*")
-    .from("users")
-    .then((data) => {
-        res.json(data);
-    })
-    .catch((err) => res.json("empty credentials"));
-    // res.send(database.users);
+    // db.select("*")
+    // .from("users")
+    // .then((data) => {
+    //     res.json(data);
+    // })
+    // .catch((err) => res.json("empty credentials"));
+    res.send(database.users);
 });
 
 app.post("/api/signin", (req, res) => {
