@@ -18,15 +18,16 @@ const db = knex({
 const app = express();
 
 app.use(cors());
+
 app.use(bodyParser.json());
 
 // app.get("/", (req, res) => {
-//     // db.select("*")
-//     // .from("users")
-//     // .then((data) => {
-//     //     res.json(data);
-//     // })
-//     // .catch((err) => res.json("empty credentials"));
+//     db.select("*")
+//     .from("users")
+//     .then((data) => {
+//         res.json(data);
+//     })
+//     .catch((err) => res.json("empty credentials"));
 //     // res.send(database.users);
 // });
 
