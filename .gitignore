@@ -6,6 +6,7 @@ client/src/config/dev.js
 client/package-lock.json
 client/src/setupProxy.js
 
+.idea
 debug.log
 .*.swp
 ._*
