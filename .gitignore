@@ -7,7 +7,6 @@ client/package-lock.json
 client/src/setupProxy.js
 
 debug.log
-README.md
 .*.swp
 ._*
 .DS_Store
