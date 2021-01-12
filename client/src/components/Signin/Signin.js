@@ -1,11 +1,5 @@
 import React from 'react';
-// import { Route, Router } from "react-router-dom";
-// import createHistory from "history/createBrowserHistory";
 
-// import Home from "../../views/Home";
-// import VideoInput from "../../views/VideoInput";
-
-import FaceUnlock from "../../views/VideoInput";
 class Signin extends React.Component {
   constructor(props) {
     super(props);
@@ -75,21 +69,12 @@ class Signin extends React.Component {
               <legend className="f1 fw6 ph0 mh0 ttu">Sign In</legend>
 
               <div className="">
-                <FaceUnlock/>
-                {/* <input
+                <input
                   onClick={this.onSubmitunlock}
                   className="b ph4 pv3 input-reset ba b--black bg-transparent grow pointer f6 dib"
                   type="submit"
                   value="Face Unlock"
-                /> */}
-                {/* <Router
-                  history={createHistory({ basename: process.env.PUBLIC_URL })}
-                >
-                  <div className="route">
-                    <Route exact path="/" component={Home} />
-                    <Route exact path="/camera" component={VideoInput} />
-                  </div>
-                </Router> */}
+                />
               </div>
 
               <div className="mt3">
