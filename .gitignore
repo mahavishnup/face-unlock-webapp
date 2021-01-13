@@ -5,8 +5,10 @@ client/node_modules
 client/src/config/dev.js
 client/package-lock.json
 client/src/setupProxy.js
+client/client
 
 .idea
+.vscode
 debug.log
 .*.swp
 ._*
