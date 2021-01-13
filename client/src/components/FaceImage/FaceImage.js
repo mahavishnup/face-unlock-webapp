@@ -4,7 +4,7 @@ import DrawBox from '../drawBox';
 import ShowDescriptors from '../showDescriptors';
 import { JSON_PROFILE } from '../common/profile';
 
-const MaxWidth = 600;
+const MaxWidth = 450;
 const boxColor = '#BE80B5';
 const testImg = require('./1.jpg');
 

@@ -4,7 +4,7 @@ import { loadModels, getFullFaceDescription, createMatcher } from '../FaceRecogn
 import DrawBox from '../drawBox';
 import { JSON_PROFILE } from '../common/profile';
 
-const WIDTH = 240;
+const WIDTH = 320;
 const HEIGHT = 240;
 const inputSize = 160;
 
