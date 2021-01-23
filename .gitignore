@@ -6,7 +6,7 @@ client/src/config/dev.js
 client/package-lock.json
 client/src/setupProxy.js
 client/client
-
+bnk48-face-recognition
 .idea
 .vscode
 debug.log
