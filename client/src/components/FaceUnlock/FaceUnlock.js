@@ -18,6 +18,7 @@ class FaceUnlock extends Component  {
             faceMatcher: null,
             showDescriptors: false,
             facingMode: null,
+            faceValue: null,
         };
     }
 
@@ -34,7 +35,7 @@ class FaceUnlock extends Component  {
             );
             if (inputDevice.length < 2) {
                 await this.setState({
-                    facingMode: "user",
+                    facingMode: 1,
                 });
             } else {
                 await this.setState({
@@ -53,7 +54,7 @@ class FaceUnlock extends Component  {
     startCapture = () => {
         this.interval = setInterval(() => {
             this.capture();
-        }, 1500);
+        }, 15500);
     };
 
     componentWillUnmount() {
@@ -66,6 +67,8 @@ class FaceUnlock extends Component  {
                 this.webcam.current.getScreenshot(),
                 inputSize
             ).then((fullDesc) => this.setState({ fullDesc }));
+
+            this.setState({ faceValue: 1 });
         }
     };
 
@@ -83,10 +86,10 @@ class FaceUnlock extends Component  {
                 height: HEIGHT,
                 facingMode: facingMode,
             };
-            if (facingMode === "user") {
-                camera = "Front";
+            if (facingMode === faceValue) {
+                camera = "Access Granted";
             } else {
-                camera = "Back";
+                camera = "Processing";
             }
         }
 
@@ -100,11 +103,11 @@ class FaceUnlock extends Component  {
                     {!!fullDesc ? <DrawBox fullDesc={fullDesc} faceMatcher={faceMatcher} imageWidth={WIDTH} boxColor={"blue"} /> : null}
                 </div>
             </div>
-            <div>
-                <input name="descriptors" type="checkbox" checked={this.state.showDescriptors} onChange={this.handleDescriptorsCheck} />
-                <label>Show Descriptors</label>
-            </div>
-            {!!showDescriptors ? <ShowDescriptors fullDesc={fullDesc} /> : null}
+            {/*<div>*/}
+            {/*    <input name="descriptors" type="checkbox" checked={this.state.showDescriptors} onChange={this.handleDescriptorsCheck} />*/}
+            {/*    <label>Show Descriptors</label>*/}
+            {/*</div>*/}
+            {/*{!!showDescriptors ? <ShowDescriptors fullDesc={fullDesc} /> : null}*/}
         </div>;
     }
 }

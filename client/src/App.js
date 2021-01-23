@@ -68,7 +68,7 @@ class App extends Component {
               {/*<Logo />*/}
               {/*<p>*/}
                 <FaceCamera />
-                <FaceImage />
+                {/*<FaceImage />*/}
               {/*</p>*/}
             </div>
           : (

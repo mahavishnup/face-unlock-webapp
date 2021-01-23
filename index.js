@@ -96,7 +96,7 @@ app.get("/api/profile/:id", (req, res) => {
     .catch((err) => res.json("error getting user"));
 });
 
-app.put("/api/facetoken", (req, res) => {
+app.post("/api/facetoken", (req, res) => {
   const { id, token } = req.body;
   db("users")
     .where("id", "=", id)

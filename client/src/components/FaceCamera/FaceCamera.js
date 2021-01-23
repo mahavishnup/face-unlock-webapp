@@ -18,6 +18,7 @@ class FaceCamera extends Component  {
             faceMatcher: null,
             showDescriptors: false,
             facingMode: null,
+            faceValue: null,
         };
     }
 
@@ -34,7 +35,7 @@ class FaceCamera extends Component  {
             );
             if (inputDevice.length < 2) {
                 await this.setState({
-                    facingMode: "user",
+                    facingMode: 1,
                 });
             } else {
                 await this.setState({
@@ -53,7 +54,7 @@ class FaceCamera extends Component  {
     startCapture = () => {
         this.interval = setInterval(() => {
             this.capture();
-        }, 1500);
+        }, 15500);
     };
 
     componentWillUnmount() {
@@ -66,6 +67,8 @@ class FaceCamera extends Component  {
                 this.webcam.current.getScreenshot(),
                 inputSize
             ).then((fullDesc) => this.setState({ fullDesc }));
+
+            this.setState({ faceValue: 1 });
         }
     };
 
@@ -83,10 +86,10 @@ class FaceCamera extends Component  {
                 height: HEIGHT,
                 facingMode: facingMode,
             };
-            if (facingMode === "user") {
-                camera = "Front";
+            if (facingMode === faceValue) {
+                camera = "Registered Successfully!";
             } else {
-                camera = "Back";
+                camera = "Processing";
             }
         }
 
