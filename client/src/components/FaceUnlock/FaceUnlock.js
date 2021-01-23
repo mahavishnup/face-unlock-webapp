@@ -77,7 +77,7 @@ class FaceUnlock extends Component  {
     };
 
     render() {
-        const { fullDesc, faceMatcher, showDescriptors, facingMode } = this.state;
+        const { fullDesc, faceMatcher, faceValue, showDescriptors, facingMode } = this.state;
         let videoConstraints = null;
         let camera = "";
         if (!!facingMode) {

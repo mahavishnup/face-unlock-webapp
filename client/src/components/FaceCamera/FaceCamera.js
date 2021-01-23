@@ -77,7 +77,7 @@ class FaceCamera extends Component  {
     };
 
     render() {
-        const { fullDesc, faceMatcher, showDescriptors, facingMode } = this.state;
+        const { fullDesc, faceMatcher, faceValue, showDescriptors, facingMode } = this.state;
         let videoConstraints = null;
         let camera = "";
         if (!!facingMode) {
@@ -86,7 +86,7 @@ class FaceCamera extends Component  {
                 height: HEIGHT,
                 facingMode: facingMode,
             };
-            if (facingMode === faceValue) {
+            if (facingMode === faceValue ) {
                 camera = "Registered Successfully!";
             } else {
                 camera = "Processing";
