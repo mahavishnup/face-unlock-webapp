@@ -4,8 +4,8 @@ import Navigation from './components/Navigation/Navigation';
 import Signin from './components/Signin/Signin';
 import Register from './components/Register/Register';
 import Logo from "./components/Logo/Logo";
-// import FaceCamera from "./components/FaceCamera/FaceCamera";
-import FaceImage from "./components/FaceImage/FaceImage";
+import FaceCamera from "./components/FaceCamera/FaceCamera";
+// import FaceImage from "./components/FaceImage/FaceImage";
 import './App.css';
 
 const particlesOptions = {
@@ -67,8 +67,8 @@ class App extends Component {
           ? <div>
               <Logo />
               <p>
-                {/* <FaceCamera /> */}
-                <FaceImage />
+                <FaceCamera />
+                {/* <FaceImage /> */}
               </p>
             </div>
           : (
