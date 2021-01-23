@@ -3,7 +3,7 @@ import Particles from 'react-particles-js';
 import Navigation from './components/Navigation/Navigation';
 import Signin from './components/Signin/Signin';
 import Register from './components/Register/Register';
-import Logo from "./components/Logo/Logo";
+// import Logo from "./components/Logo/Logo";
 // import FaceCamera from "./components/FaceCamera/FaceCamera";
 import FaceImage from "./components/FaceImage/FaceImage";
 import './App.css';
