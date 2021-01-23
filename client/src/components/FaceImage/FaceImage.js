@@ -6,7 +6,7 @@ import { JSON_PROFILE } from '../common/profile';
 
 const MaxWidth = 560;
 const boxColor = '#BE80B5';
-const testImg = require("../img/1.jpeg");
+const testImg = require("/public/img/1.jpeg");
 
 const INIT_STATE = {
     url: null,
