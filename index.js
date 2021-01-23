@@ -96,16 +96,15 @@ app.get("/api/profile/:id", (req, res) => {
     .catch((err) => res.json("error getting user"));
 });
 
-app.put("/api/image", (req, res) => {
-  const { id } = req.body;
+app.put("/api/facetoken", (req, res) => {
+  const { id, token } = req.body;
   db("users")
     .where("id", "=", id)
-    .increment("entries", 1)
-    .returning("entries")
-    .then((entries) => {
-      res.json(entries[0]);
+    .update("facetoken", token)
+    .then((facetoken) => {
+      res.json(facetoken[0]);
     })
-    .catch((err) => res.json("unable to get entries"));
+    .catch((err) => res.json("unable to get face-token"));
 });
 
 if (process.env.NODE_ENV === "production") {

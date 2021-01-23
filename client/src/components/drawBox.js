@@ -27,7 +27,7 @@ class DrawBox extends Component {
       });
       if (!!this.state.descriptors && !!faceMatcher) {
         let match = await this.state.descriptors.map(descriptor =>
-          faceMatcher.findBestMatch(descriptor)
+            faceMatcher.findBestMatch(descriptor)
         );
         this.setState({ match });
       }
@@ -45,40 +45,40 @@ class DrawBox extends Component {
         const dimension = detection._imageDims;
         let _X = imageWidth * relativeBox._x;
         let _Y =
-          (relativeBox._y * imageWidth * dimension._height) / dimension._width;
+            (relativeBox._y * imageWidth * dimension._height) / dimension._width;
         let _W = imageWidth * relativeBox.width;
         let _H =
-          (relativeBox.height * imageWidth * dimension._height) /
-          dimension._width;
+            (relativeBox.height * imageWidth * dimension._height) /
+            dimension._width;
         return (
-          <div key={i}>
-            <div
-              style={{
-                position: 'absolute',
-                border: 'solid',
-                borderColor: boxColor,
-                height: _H,
-                width: _W,
-                transform: `translate(${_X}px,${_Y}px)`
-              }}
-            >
-              {!!match && match[i] && match[i]._label !== 'unknown' ? (
-                <p
+            <div key={i}>
+              <div
                   style={{
-                    backgroundColor: boxColor,
+                    position: 'absolute',
                     border: 'solid',
                     borderColor: boxColor,
+                    height: _H,
                     width: _W,
-                    marginTop: 0,
-                    color: '#fff',
-                    transform: `translate(-3px,${_H}px)`
+                    transform: `translate(${_X}px,${_Y}px)`
                   }}
-                >
-                  {match[i]._label}
-                </p>
-              ) : null}
+              >
+                {!!match && match[i] && match[i]._label !== 'unknown' ? (
+                    <p
+                        style={{
+                          backgroundColor: boxColor,
+                          border: 'solid',
+                          borderColor: boxColor,
+                          width: _W,
+                          marginTop: 0,
+                          color: '#fff',
+                          transform: `translate(-3px,${_H}px)`
+                        }}
+                    >
+                      {match[i]._label}
+                    </p>
+                ) : null}
+              </div>
             </div>
-          </div>
         );
       });
     }

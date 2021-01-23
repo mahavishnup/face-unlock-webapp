@@ -6,7 +6,7 @@ import { JSON_PROFILE } from '../common/profile';
 
 const MaxWidth = 560;
 const boxColor = '#BE80B5';
-const testImg = require('./1.jpg');
+const testImg = require("../img/1.jpeg");
 
 const INIT_STATE = {
     url: null,
@@ -14,7 +14,7 @@ const INIT_STATE = {
     fullDesc: null,
     imageDimension: null,
     error: null,
-    loading: false
+    loading: false,
 };
 
 class FaceImage extends Component {
@@ -26,9 +26,14 @@ class FaceImage extends Component {
             showDescriptors: false,
             WIDTH: null,
             HEIGHT: 0,
-            isModelLoaded: !!isFaceDetectionModelLoaded()
+            isModelLoaded: !!isFaceDetectionModelLoaded(),
+            facetoken: "",
         };
     }
+
+    onFaceTokenChange = (event) => {
+        this.setState({ facetoken: event.target.value });
+    };
 
     componentWillMount() {
         this.resetState();
@@ -51,28 +56,28 @@ class FaceImage extends Component {
         this.setState({ faceMatcher });
     };
 
-    handleFileChange = async event => {
+    handleFileChange = async (event) => {
         this.resetState();
         await this.setState({
             imageURL: URL.createObjectURL(event.target.files[0]),
-            loading: true
+            loading: true,
         });
         this.handleImageChange();
     };
 
-    handleURLChange = event => {
+    handleURLChange = (event) => {
         this.setState({ url: event.target.value });
     };
 
     handleButtonClick = async () => {
         this.resetState();
         let blob = await fetch(this.state.url)
-            .then(r => r.blob())
-            .catch(error => this.setState({ error }));
-        if (!!blob && blob.type.includes('image')) {
+            .then((r) => r.blob())
+            .catch((error) => this.setState({ error }));
+        if (!!blob && blob.type.includes("image")) {
             this.setState({
                 imageURL: URL.createObjectURL(blob),
-                loading: true
+                loading: true,
             });
             this.handleImageChange();
         }
@@ -80,12 +85,12 @@ class FaceImage extends Component {
 
     handleImageChange = async (image = this.state.imageURL) => {
         await this.getImageDimension(image);
-        await getFullFaceDescription(image).then(fullDesc => {
+        await getFullFaceDescription(image).then((fullDesc) => {
             this.setState({ fullDesc, loading: false });
         });
     };
 
-    getImageDimension = imageURL => {
+    getImageDimension = (imageURL) => {
         let img = new Image();
         img.onload = () => {
             let HEIGHT = (this.state.WIDTH * img.height) / img.width;
@@ -93,15 +98,32 @@ class FaceImage extends Component {
                 HEIGHT,
                 imageDimension: {
                     width: img.width,
-                    height: img.height
-                }
+                    height: img.height,
+                },
             });
         };
         img.src = imageURL;
     };
 
-    handleDescriptorsCheck = event => {
+    handleDescriptorsCheck = (event) => {
         this.setState({ showDescriptors: event.target.checked });
+    };
+
+    onSubmitSaveFace = () => {
+        fetch("/api/facetoken", {
+            method: "post",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                facetoken: this.state.faceToken,
+            }),
+        })
+            .then((response) => response.json())
+            .then((user) => {
+                if (user.id) {
+                    this.props.loadUser(user);
+                    return "<b>Face Registered Successfully!</b>";
+                }
+            });
     };
 
     resetState = () => {
@@ -117,17 +139,17 @@ class FaceImage extends Component {
             showDescriptors,
             isModelLoaded,
             error,
-            loading
+            loading,
         } = this.state;
 
         // Display working status
         let status = <p>Status: Model Loaded = {isModelLoaded.toString()}</p>;
-        if (!!error && error.toString() === 'TypeError: Failed to fetch') {
+        if (!!error && error.toString() === "TypeError: Failed to fetch") {
             status = (
-                <p style={{ color: 'red' }}>Status: Error Failed to fetch Image URL</p>
+                <p style={{ color: "red" }}>Status: Error Failed to fetch Image URL</p>
             );
         } else if (loading) {
-            status = <p style={{ color: 'blue' }}>Status: LOADING...</p>;
+            status = <p style={{ color: "blue" }}>Status: LOADING...</p>;
         } else if (!!fullDesc && !!imageURL && !loading) {
             if (fullDesc.length < 2)
                 status = <p>Status: {fullDesc.length} Face Detect</p>;
@@ -140,12 +162,12 @@ class FaceImage extends Component {
             <div
                 style={{
                     margin: 0,
-                    color: '#BE80B5',
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%,-50%)',
-                    textShadow: '2px 2px 3px #fff'
+                    color: "#BE80B5",
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%,-50%)",
+                    textShadow: "2px 2px 3px #fff",
                 }}
             >
                 <div className="loading" />
@@ -153,86 +175,36 @@ class FaceImage extends Component {
             </div>
         );
 
-        return (
-            <div
-                style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    height: '240px',
-                    width: '160px'
-                }}
-            >
-                {status}
-                <div
-                    style={{
-                        position: 'relative',
-                        width: WIDTH,
-                        height: HEIGHT
-                    }}
-                >
-                    {!!imageURL ? (
-                        <div
-                            style={{
-                                position: 'relative'
-                            }}
-                        >
-                            <div style={{ position: 'absolute' }}>
-                                <img style={{ width: WIDTH }} src={imageURL} alt="imageURL" />
-                            </div>
-                            {!!fullDesc ? (
-                                <DrawBox
-                                    fullDesc={fullDesc}
-                                    faceMatcher={faceMatcher}
-                                    imageWidth={WIDTH}
-                                    boxColor={boxColor}
-                                />
-                            ) : null}
-                        </div>
-                    ) : null}
-                    {loading ? spinner : null}
+        return <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            {status}
+            <div style={{ position: "relative", width: WIDTH, height: HEIGHT }}>
+                {!!imageURL ? <div style={{ position: "relative" }}>
+                    <div style={{ position: "absolute" }}>
+                        <img style={{ width: WIDTH }} src={imageURL} alt="imageURL" />
+                    </div>
+                    {!!fullDesc ? <DrawBox fullDesc={fullDesc} faceMatcher={faceMatcher} imageWidth={WIDTH} boxColor={boxColor} /> : null}
+                </div> : null}
+                {loading ? spinner : null}
+            </div>
+            <div style={{ width: WIDTH, padding: 10, border: "solid", marginTop: 10 }}>
+                <p>Input Image file or URL</p>
+                <input id="myFileUpload" type="file" onChange={this.handleFileChange} accept=".jpg, .jpeg, .png" />
+                <br />
+                <div className="URLInput">
+                    <input type="url" name="url" id="url" placeholder="Place your photo URL here (only .jpg, .jpeg, .png)" pattern="https://.*" size="30" onChange={this.handleURLChange} />
+                    <button onClick={this.handleButtonClick}>Upload</button>
                 </div>
-                <div
-                    style={{
-                        width: WIDTH,
-                        padding: 10,
-                        border: 'solid',
-                        marginTop: 10
-                    }}
-                >
-                    <p>Input Image file or URL</p>
-                    <input
-                        id="myFileUpload"
-                        type="file"
-                        onChange={this.handleFileChange}
-                        accept=".jpg, .jpeg, .png"
-                    />
-                    <br />
-                    <div className="URLInput">
-                        <input
-                            type="url"
-                            name="url"
-                            id="url"
-                            placeholder="Place your photo URL here (only .jpg, .jpeg, .png)"
-                            pattern="https://.*"
-                            size="30"
-                            onChange={this.handleURLChange}
-                        />
-                        <button onClick={this.handleButtonClick}>Upload</button>
-                    </div>
-                    <div>
-                        <input
-                            name="descriptors"
-                            type="checkbox"
-                            checked={this.state.showDescriptors}
-                            onChange={this.handleDescriptorsCheck}
-                        />
-                        <label>Show Descriptors</label>
-                    </div>
-                    {!!showDescriptors ? <ShowDescriptors fullDesc={fullDesc} /> : null}
+                <div>
+                    <input name="descriptors" type="checkbox" checked={this.state.showDescriptors} onChange={this.handleDescriptorsCheck} />
+                    <label>Show Descriptors</label>
+                </div>
+                {!!showDescriptors ? <ShowDescriptors fullDesc={fullDesc} /> : null}
+                <div>
+                    <input className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="text" name="descriptors" id="descriptors" value={fullDesc} />
+                    <input onClick={this.onSubmitSaveFace} className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" type="submit" value="Save Profile" />
                 </div>
             </div>
-        );
+        </div>;
     }
 }
 export default FaceImage;

@@ -3,8 +3,8 @@ import Particles from 'react-particles-js';
 import Navigation from './components/Navigation/Navigation';
 import Signin from './components/Signin/Signin';
 import Register from './components/Register/Register';
-// import Logo from "./components/Logo/Logo";
-// import FaceCamera from "./components/FaceCamera/FaceCamera";
+import Logo from "./components/Logo/Logo";
+import FaceCamera from "./components/FaceCamera/FaceCamera";
 import FaceImage from "./components/FaceImage/FaceImage";
 import './App.css';
 
@@ -65,11 +65,11 @@ class App extends Component {
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
         { route === 'home'
           ? <div>
-              {/* <Logo /> */}
-              <p>
-                {/* <FaceCamera /> */}
+              {/*<Logo />*/}
+              {/*<p>*/}
+                <FaceCamera />
                 <FaceImage />
-              </p>
+              {/*</p>*/}
             </div>
           : (
              route === 'signin'

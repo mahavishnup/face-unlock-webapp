@@ -3,6 +3,7 @@ import Webcam from 'react-webcam';
 import { loadModels, getFullFaceDescription, createMatcher } from '../FaceRecognition/FaceRecognition';
 import DrawBox from '../drawBox';
 import { JSON_PROFILE } from '../common/profile';
+import ShowDescriptors from "../showDescriptors";
 
 const WIDTH = 320;
 const HEIGHT = 240;
@@ -15,7 +16,8 @@ class FaceUnlock extends Component  {
         this.state = {
             fullDesc: null,
             faceMatcher: null,
-            facingMode: null
+            showDescriptors: false,
+            facingMode: null,
         };
     }
 
@@ -26,17 +28,17 @@ class FaceUnlock extends Component  {
     }
 
     setInputDevice = () => {
-        navigator.mediaDevices.enumerateDevices().then(async devices => {
+        navigator.mediaDevices.enumerateDevices().then(async (devices) => {
             let inputDevice = await devices.filter(
-                device => device.kind === 'videoinput'
+                (device) => device.kind === "videoinput"
             );
             if (inputDevice.length < 2) {
                 await this.setState({
-                    facingMode: 'user'
+                    facingMode: "user",
                 });
             } else {
                 await this.setState({
-                    facingMode: { exact: 'environment' }
+                    facingMode: { exact: "environment" },
                 });
             }
             this.startCapture();
@@ -63,69 +65,48 @@ class FaceUnlock extends Component  {
             await getFullFaceDescription(
                 this.webcam.current.getScreenshot(),
                 inputSize
-            ).then(fullDesc => this.setState({ fullDesc }));
+            ).then((fullDesc) => this.setState({ fullDesc }));
         }
     };
 
+    handleDescriptorsCheck = (event) => {
+        this.setState({ showDescriptors: event.target.checked });
+    };
+
     render() {
-        const { fullDesc, faceMatcher, facingMode } = this.state;
+        const { fullDesc, faceMatcher, showDescriptors, facingMode } = this.state;
         let videoConstraints = null;
-        let camera = '';
+        let camera = "";
         if (!!facingMode) {
             videoConstraints = {
                 width: WIDTH,
                 height: HEIGHT,
-                facingMode: facingMode
+                facingMode: facingMode,
             };
-            if (facingMode === 'user') {
-                camera = 'recognize';
+            if (facingMode === "user") {
+                camera = "Front";
             } else {
-                camera = 'Welcome!';
+                camera = "Back";
             }
         }
 
-        return (
-            <div
-                className="Camera"
-                style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center'
-                }}
-            >
-                <p>Camera: {camera}</p>
-                <div
-                    style={{
-                        width: WIDTH,
-                        height: HEIGHT
-                    }}
-                >
-                    <div style={{ position: 'relative', width: WIDTH }}>
-                        {!!videoConstraints ? (
-                            <div style={{ position: 'absolute' }}>
-                                <Webcam
-                                    audio={false}
-                                    width={WIDTH}
-                                    height={HEIGHT}
-                                    ref={this.webcam}
-                                    screenshotFormat="image/jpeg"
-                                    videoConstraints={videoConstraints}
-                                />
-                            </div>
-                        ) : null}
-                        {!!fullDesc ? (
-                            <DrawBox
-                                fullDesc={fullDesc}
-                                faceMatcher={faceMatcher}
-                                imageWidth={WIDTH}
-                                boxColor={'blue'}
-                            />
-                        ) : null}
-                    </div>
+        return <div className="Camera" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <p>Camera: {camera}</p>
+            <div style={{ width: WIDTH, height: HEIGHT }}>
+                <div style={{ position: "relative", width: WIDTH }}>
+                    {!!videoConstraints ? <div style={{ position: "absolute" }}>
+                        <Webcam audio={false} width={WIDTH} height={HEIGHT} ref={this.webcam} screenshotFormat="image/jpeg" videoConstraints={videoConstraints} />
+                    </div> : null}
+                    {!!fullDesc ? <DrawBox fullDesc={fullDesc} faceMatcher={faceMatcher} imageWidth={WIDTH} boxColor={"blue"} /> : null}
                 </div>
             </div>
-        );
+            <div>
+                <input name="descriptors" type="checkbox" checked={this.state.showDescriptors} onChange={this.handleDescriptorsCheck} />
+                <label>Show Descriptors</label>
+            </div>
+            {!!showDescriptors ? <ShowDescriptors fullDesc={fullDesc} /> : null}
+        </div>;
     }
-};
+}
 
 export default FaceUnlock;

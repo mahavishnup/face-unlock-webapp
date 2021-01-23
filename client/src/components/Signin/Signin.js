@@ -7,7 +7,6 @@ class Signin extends React.Component {
     this.state = {
       signInEmail: "",
       signInPassword: "",
-      signInFaceUnlock: "",
     };
   }
 
@@ -20,10 +19,6 @@ class Signin extends React.Component {
     this.setState({ signInPassword: event.target.value });
   };
 
-  onFaceUnlockChange = (event) => {
-    this.setState({ signInFaceUnlock: event.target.value });
-  };
-
   onSubmitSignIn = () => {
     fetch("/api/signin", {
       method: "post",
@@ -31,24 +26,6 @@ class Signin extends React.Component {
       body: JSON.stringify({
         email: this.state.signInEmail,
         password: this.state.signInPassword,
-      }),
-    })
-      .then((response) => response.json())
-      .then((user) => {
-        if (user.id) {
-          this.props.loadUser(user);
-          this.props.onRouteChange("home");
-        }
-      });
-  };
-
-  onSubmitunlock = () => {
-    fetch("/api/signin/unlock", {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: this.state.signInEmail,
-        faceunlock: this.state.signInFaceUnlock,
       }),
     })
       .then((response) => response.json())

@@ -28,35 +28,24 @@ class ShowDescriptors extends Component {
   render() {
     const { descriptors } = this.state;
 
-    return (
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignContent: 'center',
-          alignItems: 'center'
-        }}
-      >
-        <h3>Detail Descriptions</h3>
-        {!!descriptors
-          ? descriptors.map((descriptor, i) => (
-              <p
-                key={i}
-                style={{
-                  padding: 10,
-                  margin: 20,
-                  wordBreak: 'break-all',
-                  borderStyle: 'solid',
-                  borderColor: 'blue'
-                }}
-              >
-                <strong>Descriptor_{i}: </strong>
-                {descriptor.toString()}
-              </p>
-            ))
-          : null}
-      </div>
-    );
+    return <div style={{ display: "flex", flexDirection: "column", alignContent: "center", alignItems: "center" }}>
+      {!!descriptors ? descriptors.map((descriptor, i) => (
+          <p
+              key={i}
+              style={{
+                padding: 10,
+                margin: 20,
+                wordBreak: "break-all",
+                borderStyle: "solid",
+                borderColor: "blue",
+              }}
+          >
+            <strong>Descriptor_{i}: </strong>
+            {descriptor.toString()}
+          </p>
+      )) : null}
+      {/* {console.log(descriptors)} */}
+    </div>;
   }
 }
 
