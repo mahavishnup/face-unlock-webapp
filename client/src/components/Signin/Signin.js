@@ -21,7 +21,6 @@ class Signin extends React.Component {
       showDescriptors: false,
       facingMode: null,
       faceValue: null,
-      faceToken: null,
     };
   }
 
@@ -83,7 +82,7 @@ class Signin extends React.Component {
   startCapture = () => {
     this.interval = setInterval(() => {
       this.capture();
-    }, 15500);
+    }, 500);
   };
 
   componentWillUnmount() {
@@ -97,7 +96,7 @@ class Signin extends React.Component {
           inputSize
       ).then((fullDesc) => this.setState({ fullDesc }));
 
-      let faceToken = <FaceValue fullDesc={this.state.fullDesc} faceMatcher={this.state.faceMatcher} /> ;
+      let faceToken = !!this.state.fullDesc ? <FaceValue fullDesc={this.state.fullDesc} faceMatcher={this.state.faceMatcher} /> : null ;
 
       console.log(faceToken);
 
@@ -136,7 +135,7 @@ class Signin extends React.Component {
         facingMode: facingMode,
       };
       if (facingMode === faceValue ) {
-        camera = "Access Granted";
+        camera = "Access Granted"  + !!fullDesc ? <FaceValue fullDesc={fullDesc} faceMatcher={faceMatcher} /> : null + "!";
       } else {
         camera = "Processing";
       }
