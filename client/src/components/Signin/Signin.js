@@ -140,7 +140,7 @@ class Signin extends React.Component {
     }
 
     let faceToken = !!fullDesc ? <FaceValue fullDesc={fullDesc} faceMatcher={faceMatcher} /> : null ;
-
+    console.log(faceToken);
     if( faceToken === 'AJITH KUMAR.A' ){
       this.setState({ faceValue: 1 });
       this.setState({ signInEmail: 'ajith18anbu@gmail.com' });
