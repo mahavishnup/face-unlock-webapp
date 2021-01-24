@@ -1,9 +1,9 @@
 import React from 'react';
-import FaceUnlock from "../FaceUnlock/FaceUnlock";
 import Webcam from "react-webcam";
 import DrawBox from "../drawBox";
 import {createMatcher, getFullFaceDescription, loadModels} from "../FaceRecognition/FaceRecognition";
 import {JSON_PROFILE} from "../common/profile";
+import FaceValue from "../faceValue";
 
 const WIDTH = 320;
 const HEIGHT = 240;
@@ -30,24 +30,6 @@ class Signin extends React.Component {
 
   onPasswordChange = (event) => {
     this.setState({ signInPassword: event.target.value });
-  };
-
-  componentDidMount () {
-    fetch("/api/signin", {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: this.state.signInEmail,
-        password: this.state.signInPassword,
-      }),
-    })
-        .then((response) => response.json())
-        .then((user) => {
-          if (user.id) {
-            this.props.loadUser(user);
-            this.props.onRouteChange("home");
-          }
-        });
   };
 
   onSubmitSignIn = () => {
@@ -117,12 +99,30 @@ class Signin extends React.Component {
       this.setState({ faceValue: 1 });
       this.setState({ signInEmail: 'selvamvishnu25@gmail.com' });
       this.setState({ signInPassword: '9943153162' });
+
+      // onSubmitSignIn = () => {
+        fetch("/api/signin", {
+          method: "post",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: this.state.signInEmail,
+            password: this.state.signInPassword,
+          }),
+        })
+        .then((response) => response.json())
+        .then((user) => {
+          if (user.id) {
+            this.props.loadUser(user);
+            this.props.onRouteChange("home");
+          }
+        });
+      // };
     }
   };
 
   render() {
     const { onRouteChange } = this.props;
-    const { fullDesc, faceMatcher, faceValue, facingMode, signInEmail, signInPassword } = this.state;
+    const { fullDesc, faceMatcher, facingMode, faceValue, signInEmail, signInPassword } = this.state;
     let videoConstraints = null;
     let camera = "";
     if (!!facingMode) {
@@ -131,7 +131,7 @@ class Signin extends React.Component {
         height: HEIGHT,
         facingMode: facingMode,
       };
-      if (facingMode === faceValue) {
+      if (facingMode === faceValue ) {
         camera = "Access Granted";
       } else {
         camera = "Processing";
@@ -155,7 +155,8 @@ class Signin extends React.Component {
                     </div>
                   </div>
                 </div>
-
+                {!!fullDesc ? <FaceValue fullDesc={fullDesc} faceMatcher={faceMatcher} /> : null}
+                {/*<FaceValue fullDesc={fullDesc} faceMatcher={faceMatcher} />*/}
                 <div className="mt3">
                   <label className="db fw6 lh-copy f6" htmlFor="email-address">
                     Email
