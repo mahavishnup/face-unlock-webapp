@@ -97,7 +97,7 @@ class Signin extends React.Component {
           inputSize
       ).then((fullDesc) => this.setState({ fullDesc }));
 
-      let faceToken = !!this.state.fullDesc ? <FaceValue fullDesc={this.state.fullDesc} faceMatcher={this.state.faceMatcher} /> : null ;
+      let faceToken = <FaceValue fullDesc={this.state.fullDesc} faceMatcher={this.state.faceMatcher} /> ;
 
       console.log(faceToken);
 
