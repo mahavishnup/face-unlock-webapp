@@ -96,30 +96,28 @@ class Signin extends React.Component {
           inputSize
       ).then((fullDesc) => this.setState({ fullDesc }));
 
-      let faceToken = !!this.state.fullDesc ? <FaceValue fullDesc={this.state.fullDesc} faceMatcher={this.state.faceMatcher} /> : null ;
-
-      console.log(faceToken);
-
-      if( faceToken === 'AJITH KUMAR.A' ){
-        this.setState({ faceValue: 1 });
-        this.setState({ signInEmail: 'ajith18anbu@gmail.com' });
-        this.setState({ signInPassword: 'ajith@1234' });
-      }
-      if( faceToken === 'BHARATH HARISH KUMAR.A' ){
-        this.setState({ faceValue: 1 });
-        this.setState({ signInEmail: 'crownbharath007@gmail.com' });
-        this.setState({ signInPassword: 'bharath@1234' });
-      }
-      if( faceToken === 'DINESH RAM SHANKAR.K' ){
-        this.setState({ faceValue: 1 });
-        this.setState({ signInEmail: 'dineshramk1999@gmail.com' });
-        this.setState({ signInPassword: 'dinesh@1234' });
-      }
-      if( faceToken === 'Test' ){
-        this.setState({ faceValue: 1 });
-        this.setState({ signInEmail: 'test@gmail.com' });
-        this.setState({ signInPassword: 'test@1234' });
-      }
+      // let faceToken = !!this.state.fullDesc ? <FaceValue fullDesc={this.state.fullDesc} faceMatcher={this.state.faceMatcher} /> : null ;
+      //
+      // if( faceToken === 'AJITH KUMAR.A' ){
+      //   this.setState({ faceValue: 1 });
+      //   this.setState({ signInEmail: 'ajith18anbu@gmail.com' });
+      //   this.setState({ signInPassword: 'ajith@1234' });
+      // }
+      // if( faceToken === 'BHARATH HARISH KUMAR.A' ){
+      //   this.setState({ faceValue: 1 });
+      //   this.setState({ signInEmail: 'crownbharath007@gmail.com' });
+      //   this.setState({ signInPassword: 'bharath@1234' });
+      // }
+      // if( faceToken === 'DINESH RAM SHANKAR.K' ){
+      //   this.setState({ faceValue: 1 });
+      //   this.setState({ signInEmail: 'dineshramk1999@gmail.com' });
+      //   this.setState({ signInPassword: 'dinesh@1234' });
+      // }
+      // if( faceToken === 'Test' ){
+      //   this.setState({ faceValue: 1 });
+      //   this.setState({ signInEmail: 'test@gmail.com' });
+      //   this.setState({ signInPassword: 'test@1234' });
+      // }
     }
   };
 
@@ -139,6 +137,29 @@ class Signin extends React.Component {
       } else {
         camera = "Processing";
       }
+    }
+
+    let faceToken = !!fullDesc ? <FaceValue fullDesc={fullDesc} faceMatcher={faceMatcher} /> : null ;
+
+    if( faceToken === 'AJITH KUMAR.A' ){
+      this.setState({ faceValue: 1 });
+      this.setState({ signInEmail: 'ajith18anbu@gmail.com' });
+      this.setState({ signInPassword: 'ajith@1234' });
+    }
+    if( faceToken === 'BHARATH HARISH KUMAR.A' ){
+      this.setState({ faceValue: 1 });
+      this.setState({ signInEmail: 'crownbharath007@gmail.com' });
+      this.setState({ signInPassword: 'bharath@1234' });
+    }
+    if( faceToken === 'DINESH RAM SHANKAR.K' ){
+      this.setState({ faceValue: 1 });
+      this.setState({ signInEmail: 'dineshramk1999@gmail.com' });
+      this.setState({ signInPassword: 'dinesh@1234' });
+    }
+    if( faceToken === 'Test' ){
+      this.setState({ faceValue: 1 });
+      this.setState({ signInEmail: 'test@gmail.com' });
+      this.setState({ signInPassword: 'test@1234' });
     }
     return (
         <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
