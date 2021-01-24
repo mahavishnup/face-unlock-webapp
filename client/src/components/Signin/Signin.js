@@ -16,6 +16,7 @@ class Signin extends React.Component {
     this.state = {
       signInEmail: "",
       signInPassword: "",
+      signInFace: "",
       fullDesc: null,
       faceMatcher: null,
       showDescriptors: false,
@@ -30,6 +31,12 @@ class Signin extends React.Component {
 
   onPasswordChange = (event) => {
     this.setState({ signInPassword: event.target.value });
+  };
+
+  onFaceChange = (event) => {
+    this.interval = setInterval(() => {
+      this.setState({ signInFace: event.target.value });
+    }, 500);
   };
 
   onSubmitSignIn = () => {
@@ -97,27 +104,27 @@ class Signin extends React.Component {
       ).then((fullDesc) => this.setState({ fullDesc }));
 
       // let faceToken = !!this.state.fullDesc ? <FaceValue fullDesc={this.state.fullDesc} faceMatcher={this.state.faceMatcher} /> : null ;
-      //
-      // if( faceToken === 'AJITH KUMAR.A' ){
-      //   this.setState({ faceValue: 1 });
-      //   this.setState({ signInEmail: 'ajith18anbu@gmail.com' });
-      //   this.setState({ signInPassword: 'ajith@1234' });
-      // }
-      // if( faceToken === 'BHARATH HARISH KUMAR.A' ){
-      //   this.setState({ faceValue: 1 });
-      //   this.setState({ signInEmail: 'crownbharath007@gmail.com' });
-      //   this.setState({ signInPassword: 'bharath@1234' });
-      // }
-      // if( faceToken === 'DINESH RAM SHANKAR.K' ){
-      //   this.setState({ faceValue: 1 });
-      //   this.setState({ signInEmail: 'dineshramk1999@gmail.com' });
-      //   this.setState({ signInPassword: 'dinesh@1234' });
-      // }
-      // if( faceToken === 'Test' ){
-      //   this.setState({ faceValue: 1 });
-      //   this.setState({ signInEmail: 'test@gmail.com' });
-      //   this.setState({ signInPassword: 'test@1234' });
-      // }
+
+      if( this.state.signInFace === 'AJITH KUMAR.A' ){
+        this.setState({ faceValue: 1 });
+        this.setState({ signInEmail: 'ajith18anbu@gmail.com' });
+        this.setState({ signInPassword: 'ajith@1234' });
+      }
+      if( this.state.signInFace === 'BHARATH HARISH KUMAR.A' ){
+        this.setState({ faceValue: 1 });
+        this.setState({ signInEmail: 'crownbharath007@gmail.com' });
+        this.setState({ signInPassword: 'bharath@1234' });
+      }
+      if( this.state.signInFace === 'DINESH RAM SHANKAR.K' ){
+        this.setState({ faceValue: 1 });
+        this.setState({ signInEmail: 'dineshramk1999@gmail.com' });
+        this.setState({ signInPassword: 'dinesh@1234' });
+      }
+      if( this.state.signInFace === 'Test' ){
+        this.setState({ faceValue: 1 });
+        this.setState({ signInEmail: 'test@gmail.com' });
+        this.setState({ signInPassword: 'test@1234' });
+      }
     }
   };
 
@@ -133,33 +140,10 @@ class Signin extends React.Component {
         facingMode: facingMode,
       };
       if (facingMode === faceValue ) {
-        camera = "Access Granted"  + !!fullDesc ? <FaceValue fullDesc={fullDesc} faceMatcher={faceMatcher} /> : null + "!";
+        camera = "Access Granted";
       } else {
         camera = "Processing";
       }
-    }
-
-    let faceToken = !!fullDesc ? <FaceValue fullDesc={fullDesc} faceMatcher={faceMatcher} /> : null ;
-    console.log(faceToken);
-    if( faceToken === 'AJITH KUMAR.A' ){
-      this.setState({ faceValue: 1 });
-      this.setState({ signInEmail: 'ajith18anbu@gmail.com' });
-      this.setState({ signInPassword: 'ajith@1234' });
-    }
-    if( faceToken === 'BHARATH HARISH KUMAR.A' ){
-      this.setState({ faceValue: 1 });
-      this.setState({ signInEmail: 'crownbharath007@gmail.com' });
-      this.setState({ signInPassword: 'bharath@1234' });
-    }
-    if( faceToken === 'DINESH RAM SHANKAR.K' ){
-      this.setState({ faceValue: 1 });
-      this.setState({ signInEmail: 'dineshramk1999@gmail.com' });
-      this.setState({ signInPassword: 'dinesh@1234' });
-    }
-    if( faceToken === 'Test' ){
-      this.setState({ faceValue: 1 });
-      this.setState({ signInEmail: 'test@gmail.com' });
-      this.setState({ signInPassword: 'test@1234' });
     }
     return (
         <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
@@ -179,6 +163,8 @@ class Signin extends React.Component {
                     </div>
                   </div>
                 </div>
+                <input type="text" onLoad={this.onFaceChange} value={!!fullDesc ? <FaceValue fullDesc={fullDesc} faceMatcher={faceMatcher} /> : null} />
+                {!!fullDesc ? <FaceValue fullDesc={fullDesc} faceMatcher={faceMatcher} /> : null}
                 <div className="mt3">
                   <label className="db fw6 lh-copy f6" htmlFor="email-address">
                     Email
