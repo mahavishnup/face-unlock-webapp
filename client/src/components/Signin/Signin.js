@@ -101,21 +101,21 @@ class Signin extends React.Component {
       this.setState({ signInPassword: '9943153162' });
 
       // onSubmitSignIn = () => {
-        fetch("/api/signin", {
-          method: "post",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: this.state.signInEmail,
-            password: this.state.signInPassword,
-          }),
-        })
-        .then((response) => response.json())
-        .then((user) => {
-          if (user.id) {
-            this.props.loadUser(user);
-            this.props.onRouteChange("home");
-          }
-        });
+      //   fetch("/api/signin", {
+      //     method: "post",
+      //     headers: { "Content-Type": "application/json" },
+      //     body: JSON.stringify({
+      //       email: this.state.signInEmail,
+      //       password: this.state.signInPassword,
+      //     }),
+      //   })
+      //   .then((response) => response.json())
+      //   .then((user) => {
+      //     if (user.id) {
+      //       this.props.loadUser(user);
+      //       this.props.onRouteChange("home");
+      //     }
+      //   });
       // };
     }
   };
@@ -132,9 +132,9 @@ class Signin extends React.Component {
         facingMode: facingMode,
       };
       if (facingMode === faceValue ) {
-        camera = "Access Granted";
+        camera = "Access Granted" + <FaceValue fullDesc={fullDesc} faceMatcher={faceMatcher} />;
       } else {
-        camera = "Processing";
+        camera = "Processing" + <FaceValue fullDesc={fullDesc} faceMatcher={faceMatcher} />;
       }
     }
     return (
@@ -155,7 +155,7 @@ class Signin extends React.Component {
                     </div>
                   </div>
                 </div>
-                {!!fullDesc ? <FaceValue fullDesc={fullDesc} faceMatcher={faceMatcher} /> : null}
+                {/*{!!fullDesc ? <FaceValue fullDesc={fullDesc} faceMatcher={faceMatcher} /> : null}*/}
                 {/*<FaceValue fullDesc={fullDesc} faceMatcher={faceMatcher} />*/}
                 <div className="mt3">
                   <label className="db fw6 lh-copy f6" htmlFor="email-address">
