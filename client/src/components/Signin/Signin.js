@@ -16,14 +16,63 @@ class Signin extends React.Component {
     this.state = {
       signInEmail: "",
       signInPassword: "",
-      signInFace: "",
       fullDesc: null,
       faceMatcher: null,
       showDescriptors: false,
       facingMode: null,
       faceValue: null,
+      descriptors: null,
+      detections: null,
+      match: null,
     };
+
+    // const { fullDesc, faceMatcher } = this.state;
+    // if( !!fullDesc ? <FaceValue fullDesc={fullDesc} faceMatcher={faceMatcher} /> : null === 'Test' ){
+    //   this.setState({ faceValue: 1 });
+    //   this.setState({ signInEmail: 'test@gmail.com' });
+    //   this.setState({ signInPassword: 'test@1234' });
+    // }else if( !!fullDesc ? <FaceValue fullDesc={fullDesc} faceMatcher={faceMatcher} /> : null === 'DINESH RAM SHANKAR.K' ){
+    //   this.setState({ faceValue: 1 });
+    //   this.setState({ signInEmail: 'dineshramk1999@gmail.com' });
+    //   this.setState({ signInPassword: 'dinesh@1234' });
+    // }else if( !!fullDesc ? <FaceValue fullDesc={fullDesc} faceMatcher={faceMatcher} /> : null === 'BHARATH HARISH KUMAR.A' ){
+    //   this.setState({ faceValue: 1 });
+    //   this.setState({ signInEmail: 'crownbharath007@gmail.com' });
+    //   this.setState({ signInPassword: 'bharath@1234' });
+    // }else if( !!fullDesc ? <FaceValue fullDesc={fullDesc} faceMatcher={faceMatcher} /> : null === 'AJITH KUMAR.A' ){
+    //   this.setState({ faceValue: 1 });
+    //   this.setState({ signInEmail: 'ajith18anbu@gmail.com' });
+    //   this.setState({ signInPassword: 'ajith@1234' });
+    // }else{
+    //   this.setState({ faceValue: null });
+    //   this.setState({ signInEmail: '' });
+    //   this.setState({ signInPassword: '' });
+    // }
   }
+
+  componentDidMount() {
+    this.getDescription();
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.getDescription(newProps);
+  }
+
+  getDescription = async (props = this.props) => {
+    const { fullDesc, faceMatcher } = props;
+    if (!!fullDesc) {
+      await this.setState({
+        descriptors: fullDesc.map(fd => fd.descriptor),
+        detections: fullDesc.map(fd => fd.detection)
+      });
+      if (!!this.state.descriptors && !!faceMatcher) {
+        let match = await this.state.descriptors.map(descriptor =>
+            faceMatcher.findBestMatch(descriptor)
+        );
+        this.setState({ match });
+      }
+    }
+  };
 
   onEmailChange = (event) => {
     this.setState({ signInEmail: event.target.value });
@@ -31,12 +80,6 @@ class Signin extends React.Component {
 
   onPasswordChange = (event) => {
     this.setState({ signInPassword: event.target.value });
-  };
-
-  onFaceChange = (event) => {
-    this.interval = setInterval(() => {
-      this.setState({ signInFace: event.target.value });
-    }, 500);
   };
 
   onSubmitSignIn = () => {
@@ -103,28 +146,9 @@ class Signin extends React.Component {
           inputSize
       ).then((fullDesc) => this.setState({ fullDesc }));
 
-      // let faceToken = !!this.state.fullDesc ? <FaceValue fullDesc={this.state.fullDesc} faceMatcher={this.state.faceMatcher} /> : null ;
-
-      if( this.state.signInFace === 'AJITH KUMAR.A' ){
-        this.setState({ faceValue: 1 });
-        this.setState({ signInEmail: 'ajith18anbu@gmail.com' });
-        this.setState({ signInPassword: 'ajith@1234' });
-      }
-      if( this.state.signInFace === 'BHARATH HARISH KUMAR.A' ){
-        this.setState({ faceValue: 1 });
-        this.setState({ signInEmail: 'crownbharath007@gmail.com' });
-        this.setState({ signInPassword: 'bharath@1234' });
-      }
-      if( this.state.signInFace === 'DINESH RAM SHANKAR.K' ){
-        this.setState({ faceValue: 1 });
-        this.setState({ signInEmail: 'dineshramk1999@gmail.com' });
-        this.setState({ signInPassword: 'dinesh@1234' });
-      }
-      if( this.state.signInFace === 'Test' ){
-        this.setState({ faceValue: 1 });
-        this.setState({ signInEmail: 'test@gmail.com' });
-        this.setState({ signInPassword: 'test@1234' });
-      }
+      this.setState({ faceValue: 1 });
+      this.setState({ signInEmail: 'ajith18anbu@gmail.com' });
+      this.setState({ signInPassword: 'ajith@1234' });
     }
   };
 
@@ -145,6 +169,25 @@ class Signin extends React.Component {
         camera = "Processing";
       }
     }
+
+    const { detections, match } = this.state;
+    let face = null;
+
+    if (!!detections) {
+      face = detections.map((detection, i) => {
+        return (
+            <div key={i}>
+              <div>
+                {!!match && match[i] && match[i]._label !== 'unknown' ? (
+                    <p>
+                      {match[i]._label}
+                    </p>
+                ) : null}
+              </div>
+            </div>
+        );
+      });
+    }
     return (
         <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
           <main className="pa4 black-80">
@@ -163,8 +206,8 @@ class Signin extends React.Component {
                     </div>
                   </div>
                 </div>
-                <input type="text" onLoad={this.onFaceChange} value={!!fullDesc ? <FaceValue fullDesc={fullDesc} faceMatcher={faceMatcher} /> : null} />
-                {!!fullDesc ? <FaceValue fullDesc={fullDesc} faceMatcher={faceMatcher} /> : null}
+                {/*{!!fullDesc ? <FaceValue fullDesc={fullDesc} faceMatcher={faceMatcher} /> : null}*/}
+                {face}
                 <div className="mt3">
                   <label className="db fw6 lh-copy f6" htmlFor="email-address">
                     Email
