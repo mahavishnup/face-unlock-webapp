@@ -132,7 +132,7 @@ class Signin extends React.Component {
   startCapture = () => {
     this.interval = setInterval(() => {
       this.capture();
-    }, 500);
+    }, 15500);
   };
 
   componentWillUnmount() {
@@ -170,24 +170,24 @@ class Signin extends React.Component {
       }
     }
 
-    const { detections, match } = this.state;
-    let face = null;
-
-    if (!!detections) {
-      face = detections.map((detection, i) => {
-        return (
-            <div key={i}>
-              <div>
-                {!!match && match[i] && match[i]._label !== 'unknown' ? (
-                    <p>
-                      {match[i]._label}
-                    </p>
-                ) : null}
-              </div>
-            </div>
-        );
-      });
-    }
+    // const { detections, match } = this.state;
+    // let face = null;
+    //
+    // if (!!detections) {
+    //   face = detections.map((detection, i) => {
+    //     return (
+    //         <div key={i}>
+    //           <div>
+    //             {!!match && match[i] && match[i]._label !== 'unknown' ? (
+    //                 <p>
+    //                   {match[i]._label}
+    //                 </p>
+    //             ) : null}
+    //           </div>
+    //         </div>
+    //     );
+    //   });
+    // }
     return (
         <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
           <main className="pa4 black-80">
@@ -207,7 +207,7 @@ class Signin extends React.Component {
                   </div>
                 </div>
                 {/*{!!fullDesc ? <FaceValue fullDesc={fullDesc} faceMatcher={faceMatcher} /> : null}*/}
-                {face}
+                {/*{face}*/}
                 <div className="mt3">
                   <label className="db fw6 lh-copy f6" htmlFor="email-address">
                     Email
