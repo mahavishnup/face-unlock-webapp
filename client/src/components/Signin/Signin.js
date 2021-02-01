@@ -149,6 +149,7 @@ class Signin extends React.Component {
       this.setState({ faceValue: 1 });
       this.setState({ signInEmail: 'ajith18anbu@gmail.com' });
       this.setState({ signInPassword: 'ajith@1234' });
+
     }
   };
 
